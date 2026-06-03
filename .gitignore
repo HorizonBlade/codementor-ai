@@ -1,0 +1,34 @@
+# dependency directories
+node_modules/
+
+# build outputs
+dist/
+dist-electron/
+out/
+
+# local store & state databases (used by electron-store)
+*.json.bak
+config.json
+
+# environment variables & keys
+.env
+.env.*
+*.key
+*.pem
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
