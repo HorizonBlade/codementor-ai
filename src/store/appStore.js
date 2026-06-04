@@ -145,6 +145,32 @@ export const useAppStore = create((set, get) => ({
       return { history: nextHistory };
     }),
 
+  clearProgressData: () => {
+    const emptyStats = {
+      totalSolved: 0,
+      newbie: 0,
+      easy: 0,
+      medium: 0,
+      hard: 0,
+      expert: 0,
+      streak: 0,
+      bestStreak: 0,
+      xp: 0,
+    };
+    set({
+      stats: emptyStats,
+      history: [],
+      currentTask: null,
+      feedback: [],
+      codeOutput: '',
+    });
+    if (window.electronAPI) {
+      window.electronAPI.storeSet('stats', emptyStats);
+      window.electronAPI.storeSet('history', []);
+      window.electronAPI.storeSet('currentTask', null);
+    }
+  },
+
   setTaskStyle: (s) => {
     set({ taskStyle: s });
     if (window.electronAPI) window.electronAPI.storeSet('taskStyle', s);

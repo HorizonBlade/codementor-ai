@@ -1,5 +1,5 @@
 import React from 'react';
-import { Settings, Key, Sliders, Shield, Info, HelpCircle } from 'lucide-react';
+import { Settings, Key, Sliders, Shield, Info, HelpCircle, Trash2 } from 'lucide-react';
 import KeyManager from '../components/KeyManager';
 import { useAppStore } from '../store/appStore';
 import { languages, difficulties } from '../utils/languages';
@@ -27,6 +27,7 @@ function SettingsPage() {
   const setFocusMode = useAppStore((s) => s.setFocusMode);
   const appLanguage = useAppStore((s) => s.appLanguage);
   const setAppLanguage = useAppStore((s) => s.setAppLanguage);
+  const clearProgressData = useAppStore((s) => s.clearProgressData);
 
   // Helper to persist settings when changed
   const savePreference = async (key, value) => {
@@ -34,6 +35,14 @@ function SettingsPage() {
       await api.storeSet(`settings:${key}`, value);
     } catch (err) {
       console.error('Failed to persist setting to store', err);
+    }
+  };
+
+  const handleClearCache = () => {
+    const confirmed = window.confirm(getTranslation('settings.clear_cache_confirm', appLanguage));
+    if (confirmed) {
+      clearProgressData();
+      alert(getTranslation('settings.clear_cache_success', appLanguage));
     }
   };
 
@@ -231,6 +240,53 @@ function SettingsPage() {
                   <option value="en">English</option>
                 </select>
               </div>
+            </div>
+          </div>
+
+          {/* Danger Zone */}
+          <div className="settings-page__section card" style={{ borderColor: 'rgba(239, 68, 68, 0.2)', background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.02) 0%, rgba(20, 10, 10, 0.2) 100%)' }}>
+            <h3 className="settings-page__section-title animate-pulse" style={{ color: '#f87171', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Trash2 size={18} />
+              {getTranslation('settings.danger_zone', appLanguage)}
+            </h3>
+            <div style={{ marginTop: '0.8rem' }}>
+              <h4 style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
+                {getTranslation('settings.clear_cache_title', appLanguage)}
+              </h4>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', lineHeight: '1.4', marginBottom: '1.2rem' }}>
+                {getTranslation('settings.clear_cache_desc', appLanguage)}
+              </p>
+              <button
+                type="button"
+                className="btn btn--danger"
+                onClick={handleClearCache}
+                style={{
+                  background: 'rgba(239, 68, 68, 0.1)',
+                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  color: '#f87171',
+                  padding: '8px 16px',
+                  borderRadius: 'var(--radius-md)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontSize: '0.85rem',
+                  fontWeight: 500,
+                  transition: 'all 0.2s',
+                  width: 'fit-content'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)';
+                  e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.5)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
+                  e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+                }}
+              >
+                <Trash2 size={14} />
+                {getTranslation('settings.clear_cache_btn', appLanguage)}
+              </button>
             </div>
           </div>
 

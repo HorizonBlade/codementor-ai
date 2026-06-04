@@ -119,6 +119,12 @@ export const translations = {
     'settings.add_btn': 'Добавить конфигурацию',
     'settings.conn_success': 'Соединение установлено успешно!',
     'settings.conn_fail': 'Ошибка валидации. Проверьте ключ или сеть.',
+    'settings.danger_zone': 'Опасная зона',
+    'settings.clear_cache_title': 'Очистить историю и прогресс',
+    'settings.clear_cache_desc': 'Это безвозвратно удалит вашу историю решённых задач, накопленный опыт (XP), серию дней (streak) и календарь активности. Конфигурация API-ключей НЕ будет затронута.',
+    'settings.clear_cache_btn': 'Очистить кэш',
+    'settings.clear_cache_confirm': 'Вы уверены, что хотите полностью стереть историю и прогресс? Это действие невозможно отменить.',
+    'settings.clear_cache_success': 'Кэш и прогресс успешно очищены!',
 
     // Progress
     'prog.title': 'Прогресс и Активность',
@@ -276,6 +282,12 @@ export const translations = {
     'settings.add_btn': 'Add Configuration',
     'settings.conn_success': 'Connection successful!',
     'settings.conn_fail': 'Validation failed. Check key or connection.',
+    'settings.danger_zone': 'Danger Zone',
+    'settings.clear_cache_title': 'Clear History & Progress',
+    'settings.clear_cache_desc': 'This will permanently delete your challenge history, accumulated experience (XP), streak, and activity calendar. Your configured API keys will NOT be affected.',
+    'settings.clear_cache_btn': 'Clear Cache',
+    'settings.clear_cache_confirm': 'Are you sure you want to completely erase your progress and history? This action cannot be undone.',
+    'settings.clear_cache_success': 'Cache and progress cleared successfully!',
 
     // Progress
     'prog.title': 'Progress & Activity',
