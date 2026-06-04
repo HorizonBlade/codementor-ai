@@ -666,7 +666,7 @@ function KeyManager() {
               {getTranslation('settings.url_input_label', appLanguage)}
             </label>
             <div style={{ position: 'relative' }}>
-              <Globe size={14} style={{ position: 'absolute', left: '12px', top: '12px', color: 'var(--text-muted)' }} />
+              <Globe size={14} style={{ position: 'absolute', left: '12px', top: '10px', color: 'var(--text-muted)' }} />
               <input
                 id="api-url-input"
                 type="text"
@@ -687,7 +687,7 @@ function KeyManager() {
               {getTranslation('settings.model_input_label', appLanguage)}
             </label>
             <div style={{ position: 'relative' }}>
-              <Cpu size={14} style={{ position: 'absolute', left: '12px', top: '12px', color: 'var(--text-muted)' }} />
+              <Cpu size={14} style={{ position: 'absolute', left: '12px', top: '10px', color: 'var(--text-muted)' }} />
               <input
                 id="api-model-input"
                 type="text"

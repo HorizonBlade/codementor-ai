@@ -56,13 +56,13 @@ function SettingsPage() {
           <Key size={18} />
           {getTranslation('settings.api_keys_title', appLanguage)}
         </h3>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '1.5rem', marginTop: '-0.5rem' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '0.75rem', marginTop: '-0.5rem' }}>
           {getTranslation('settings.api_keys_desc', appLanguage)}
         </p>
         <KeyManager />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
         
         {/* Practice Preferences */}
         <div className="settings-page__section card">
@@ -70,7 +70,7 @@ function SettingsPage() {
             <Sliders size={18} />
             {getTranslation('settings.default_prefs', appLanguage)}
           </h3>
-          <div className="task-generator__advanced-content" style={{ display: 'grid', gap: '1.2rem' }}>
+          <div className="task-generator__advanced-content" style={{ display: 'grid', gap: '0.8rem' }}>
             
             {/* Preferred Language */}
             <div className="task-generator__setting-row">
@@ -217,7 +217,7 @@ function SettingsPage() {
         </div>
 
         {/* Right Column: General Settings & System Info */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           
           {/* General Settings */}
           <div className="settings-page__section card">
@@ -249,11 +249,11 @@ function SettingsPage() {
               <Trash2 size={18} />
               {getTranslation('settings.danger_zone', appLanguage)}
             </h3>
-            <div style={{ marginTop: '0.8rem' }}>
-              <h4 style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
+            <div style={{ marginTop: '0.4rem' }}>
+              <h4 style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.2rem' }}>
                 {getTranslation('settings.clear_cache_title', appLanguage)}
               </h4>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', lineHeight: '1.4', marginBottom: '1.2rem' }}>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', lineHeight: '1.4', marginBottom: '0.75rem' }}>
                 {getTranslation('settings.clear_cache_desc', appLanguage)}
               </p>
               <button
@@ -322,7 +322,7 @@ function SettingsPage() {
               </div>
             </div>
 
-            <div className="flex items-start gap-sm" style={{ background: 'var(--bg-input)', padding: '0.8rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--glass-border)', marginTop: '1.5rem' }}>
+            <div className="flex items-start gap-sm" style={{ background: 'var(--bg-input)', padding: '0.8rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--glass-border)', marginTop: '0.8rem' }}>
               <Info size={16} className="text-purple-light" style={{ flexShrink: 0, marginTop: '2px' }} />
               <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
                 {getTranslation('settings.sys_warn', appLanguage)}
