@@ -2825,6 +2825,44 @@ pre code {
   margin-bottom: 0;
 }
 
+.assistant-chat-bubble-content ul,
+.assistant-chat-bubble-content ol {
+  padding-left: var(--space-xl);
+  margin: 8px 0;
+}
+
+.assistant-chat-bubble-content ul:last-child,
+.assistant-chat-bubble-content ol:last-child {
+  margin-bottom: 0;
+}
+
+.assistant-chat-bubble-content li {
+  margin-bottom: var(--space-xs);
+  list-style-position: outside;
+}
+
+.assistant-chat-bubble-content li:last-child {
+  margin-bottom: 0;
+}
+
+.assistant-chat-bubble-content h1,
+.assistant-chat-bubble-content h2,
+.assistant-chat-bubble-content h3,
+.assistant-chat-bubble-content h4 {
+  color: var(--text-primary);
+  margin-top: 12px;
+  margin-bottom: 6px;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.assistant-chat-bubble-content h1:first-child,
+.assistant-chat-bubble-content h2:first-child,
+.assistant-chat-bubble-content h3:first-child,
+.assistant-chat-bubble-content h4:first-child {
+  margin-top: 0;
+}
+
 .assistant-chat-bubble-content pre {
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.05);
