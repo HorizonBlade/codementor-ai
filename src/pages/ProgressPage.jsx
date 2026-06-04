@@ -1,10 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Trophy, Flame, Zap, Award, Calendar, ChevronRight, FileCode, CheckCircle2, XCircle } from 'lucide-react';
 import { useAppStore } from '../store/appStore';
 import { getDifficultyById, getLanguageById } from '../utils/languages';
 import { getTranslation } from '../utils/translations';
 
 function ProgressPage() {
+  const navigate = useNavigate();
   const stats = useAppStore((s) => s.stats);
   const history = useAppStore((s) => s.history);
   const setCurrentPage = useAppStore((s) => s.setCurrentPage);
@@ -119,7 +121,10 @@ function ProgressPage() {
           </div>
           <button 
             className="btn btn--primary" 
-            onClick={() => setCurrentPage('practice')}
+            onClick={() => {
+              setCurrentPage('practice');
+              navigate('/');
+            }}
             style={{ alignSelf: 'flex-start', marginTop: '1rem' }}
           >
             {appLanguage === 'ru' ? 'Начать практику' : 'Start Practicing'}
