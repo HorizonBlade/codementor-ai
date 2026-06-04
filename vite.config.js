@@ -11,4 +11,8 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
   },
+  test: {
+    environment: 'node',
+    include: ['electron/**/__tests__/**/*.test.js', 'src/**/__tests__/**/*.test.{js,jsx}'],
+  },
 });

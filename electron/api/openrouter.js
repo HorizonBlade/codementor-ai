@@ -388,10 +388,8 @@ class OpenRouter {
     // 2. Escaped single quotes (e.g. \' -> ')
     cleaned = cleaned.replace(/\\`/g, '`').replace(/\\'/g, "'");
 
-    // Remove markdown code fences if they wrap the entire response
-    if (cleaned.startsWith('```')) {
-      cleaned = cleaned.replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/, '').trim();
-    }
+    // Remove markdown code fences wrapping JSON content (anywhere in the response)
+    cleaned = cleaned.replace(/```(?:json)?\s*/gi, '').trim();
 
     // Locate the first '{' that represents the start of a JSON object.
     // Sometimes the model mentions `{ ... }` in a code fence or as a text character first,
