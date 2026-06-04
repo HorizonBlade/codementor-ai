@@ -51,6 +51,8 @@ function TaskGenerator() {
   const setTimerRunning = useAppStore((s) => s.setTimerRunning);
   const resetTimer = useAppStore((s) => s.resetTimer);
   const appLanguage = useAppStore((s) => s.appLanguage);
+  const history = useAppStore((s) => s.history) || [];
+  const currentTask = useAppStore((s) => s.currentTask);
 
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [error, setError] = useState('');
@@ -85,15 +87,45 @@ function TaskGenerator() {
     }, 200);
 
     try {
-      const response = await api.generateTask({
-        language: selectedLanguage,
-        difficulty: selectedDifficulty,
-        topic: selectedTopics.length > 0 ? selectedTopics : 'random',
-        style: taskStyle,
-        focus: focusMode,
-        maxHints,
-        appLanguage
-      });
+      const recentTasks = history.map((h) => h.task).filter(Boolean);
+      if (currentTask && currentTask.title && !recentTasks.includes(currentTask.title)) {
+        recentTasks.push(currentTask.title);
+      }
+
+      let response;
+      let attempts = 0;
+      const maxRetries = 2;
+      let isDuplicate = false;
+
+      do {
+        response = await api.generateTask({
+          language: selectedLanguage,
+          difficulty: selectedDifficulty,
+          topic: selectedTopics.length > 0 ? selectedTopics : 'random',
+          style: taskStyle,
+          focus: focusMode,
+          maxHints,
+          appLanguage,
+          recentTasks: recentTasks.slice(0, 50) // Limit history in prompt to last 50 tasks
+        });
+
+        if (response.success && response.data && response.data.title) {
+          const generatedTitleClean = response.data.title.trim().toLowerCase();
+          // Check if it exists in the ENTIRE history
+          const existsInHistory = history.some(
+            (h) => h.task && h.task.trim().toLowerCase() === generatedTitleClean
+          );
+          if (existsInHistory) {
+            console.warn(`[TaskGenerator] Duplicate task detected: "${response.data.title}". Retrying generation...`);
+            isDuplicate = true;
+            attempts++;
+          } else {
+            isDuplicate = false;
+          }
+        } else {
+          isDuplicate = false; // Stop loop if the request failed to let the error handler catch it
+        }
+      } while (isDuplicate && attempts < maxRetries);
 
       if (response.success && response.data && response.data.title && response.data.description) {
         const task = response.data;

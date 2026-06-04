@@ -128,7 +128,7 @@ class OpenRouter {
   }
 
   // ─── Generate a coding task ────────────────────────────────────────
-  async generateTask({ language, difficulty, topic, style, appLanguage }) {
+  async generateTask({ language, difficulty, topic, style, appLanguage, recentTasks }) {
     const isRussian = (appLanguage || 'ru') === 'ru';
     const langInstruction = isRussian
       ? [
@@ -145,6 +145,15 @@ class OpenRouter {
           '- The entire task (title, description, constraints, tags, hints, and example explanations) MUST be written exclusively in English.'
         ].join('\n');
 
+    const recentTasksInstruction = (recentTasks && recentTasks.length > 0)
+      ? [
+          'CRITICAL UNIQUE CHALLENGE REQUIREMENT:',
+          `- Do NOT generate any of the following tasks (they are already solved or recently seen by the user): ${JSON.stringify(recentTasks)}.`,
+          '- You must generate a completely different task, with a different name, different description, and different algorithmic problem statement.',
+          '- Even if the topic/language is similar, the problem itself must be distinct.'
+        ].join('\n')
+      : '';
+
     const systemMessage = {
       role: 'system',
       content: [
@@ -157,6 +166,7 @@ class OpenRouter {
         'CRITICAL: Do NOT use ellipsis or placeholders like "..." or "... and so on" inside or outside JSON arrays. Every array must contain fully realized, complete items.',
         'CRITICAL: Do NOT place a trailing comma after the last property of an object or after the last element of an array.',
         langInstruction,
+        recentTasksInstruction,
         'The JSON output must strictly conform to this schema structure:',
         '{',
         '  "title": "Short descriptive title",',
@@ -190,7 +200,7 @@ class OpenRouter {
     };
 
     const response = await this.makeRequest([systemMessage, userMessage], {
-      temperature: 0.2,
+      temperature: 0.7,
       maxTokens: 8192,
     });
 
