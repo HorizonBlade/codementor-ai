@@ -190,6 +190,18 @@ function registerIPC() {
     }
   });
 
+  ipcMain.handle('api:ask-assistant', async (_event, params) => {
+    try {
+      console.log('[IPC] api:ask-assistant');
+      loadKeysIntoPool();
+      const result = await openrouter.askAssistant(params);
+      return { success: true, data: result };
+    } catch (err) {
+      console.error('[IPC] api:ask-assistant error:', err.message);
+      return { success: false, error: err.message };
+    }
+  });
+
   ipcMain.handle('api:run-code', async (_event, params) => {
     const { code, language } = params;
     console.log(`[IPC] api:run-code (${language})`);

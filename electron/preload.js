@@ -8,6 +8,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   generateTask: (params) => ipcRenderer.invoke('api:generate-task', params),
   checkSolution: (params) => ipcRenderer.invoke('api:check-solution', params),
   runCode: (params) => ipcRenderer.invoke('api:run-code', params),
+  askAssistant: (params) => ipcRenderer.invoke('api:ask-assistant', params),
 
   // ─── API key management ────────────────────────────────────────────
   getKeys: () => ipcRenderer.invoke('keys:get'),

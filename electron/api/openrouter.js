@@ -261,6 +261,51 @@ class OpenRouter {
     return this._parseJSON(text);
   }
 
+  // ─── AI Assistant Chat method ──────────────────────────────────────
+  async askAssistant({ messages, currentTask, appLanguage }) {
+    const isRussian = (appLanguage || 'ru') === 'ru';
+    
+    // Construct the context-enriched system message
+    const systemPromptLines = [
+      'You are CodeMentor AI, a friendly and knowledgeable programming assistant.',
+      isRussian
+        ? 'Your responses MUST be written exclusively in Russian (на русском языке). Respond in a natural, helpful, and grammatically correct manner.'
+        : 'Your responses MUST be written exclusively in English.',
+      'You are inside a small, quick chat window in the corner of the student\'s coding environment. Keep your responses relatively concise, structured, and easy to read in a narrow chat panel. Use Markdown lists, bold text, and code formatting where appropriate.'
+    ];
+
+    if (currentTask) {
+      systemPromptLines.push(
+        '\n--- CURRENT CODING CHALLENGE CONTEXT ---',
+        `Title: ${currentTask.title}`,
+        `Language: ${currentTask.language || 'unspecified'}`,
+        `Difficulty: ${currentTask.difficulty || 'unspecified'}`,
+        `Description: ${currentTask.description}`,
+        '----------------------------------------',
+        '\nCRITICAL PEDAGOGICAL INSTRUCTION:',
+        'If the user is asking questions about the active coding challenge, explain the logic, guide them conceptually, help them debug their thoughts, or explain requirements/examples.',
+        'DO NOT give them the full solution code for the active challenge. Keep your code snippets for the active challenge partial, conceptual, or illustrative. Encourage them to write the code themselves.',
+        'If they ask general programming questions unrelated to this specific challenge (e.g., explaining concepts, algorithms, general syntax, or questions in other languages), feel free to explain fully and write complete, helpful code examples.'
+      );
+    } else {
+      systemPromptLines.push(
+        '\nSince there is no active challenge selected, act as a general programming tutor. Help the user with any programming-related questions, explain concepts, write code examples, and provide clear explanations.'
+      );
+    }
+
+    const fullMessages = [
+      { role: 'system', content: systemPromptLines.join('\n') },
+      ...messages
+    ];
+
+    const response = await this.makeRequest(fullMessages, {
+      temperature: 0.6,
+      maxTokens: 2048,
+    });
+
+    return this._extractText(response);
+  }
+
   // ─── Run / simulate code execution ─────────────────────────────────
   async runCode({ task, userCode, language }) {
     const systemMessage = {

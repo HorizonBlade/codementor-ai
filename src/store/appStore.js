@@ -9,6 +9,8 @@ export const useAppStore = create((set, get) => ({
   selectedTopics: [],
   feedback: [],
   appLanguage: 'ru',
+  assistantChatHistory: [],
+  isAssistantThinking: false,
 
   // UI state
   currentPage: 'practice',
@@ -74,6 +76,16 @@ export const useAppStore = create((set, get) => ({
       ],
     })),
   clearFeedback: () => set({ feedback: [] }),
+
+  addAssistantMessage: (msg) =>
+    set((state) => ({
+      assistantChatHistory: [
+        ...state.assistantChatHistory,
+        { ...msg, timestamp: new Date().toISOString() },
+      ],
+    })),
+  clearAssistantChat: () => set({ assistantChatHistory: [], isAssistantThinking: false }),
+  setIsAssistantThinking: (v) => set({ isAssistantThinking: v }),
 
   setCurrentPage: (page) => set({ currentPage: page }),
   setIsGenerating: (v) => set({ isGenerating: v }),

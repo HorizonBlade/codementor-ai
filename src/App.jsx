@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import TaskGenerator from './components/TaskGenerator';
+import AssistantChat from './components/AssistantChat';
 import PracticePage from './pages/PracticePage';
 import ProgressPage from './pages/ProgressPage';
 import SettingsPage from './pages/SettingsPage';
@@ -70,6 +71,7 @@ function App() {
           </div>
         </div>
         {showTaskGenerator && <TaskGenerator />}
+        <AssistantChat />
       </div>
     </HashRouter>
   );
