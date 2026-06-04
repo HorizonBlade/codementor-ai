@@ -90,18 +90,18 @@ function TaskPanel() {
           <h3 className="task-panel__section-title">{getTranslation('task.examples', appLanguage)}</h3>
           {currentTask.examples.map((ex, i) => (
             <div key={i} className="task-panel__example">
-              <div className="task-panel__example-row">
-                <span className="task-panel__example-label">{getTranslation('task.input', appLanguage)}:</span>
-                <code>{ex.input}</code>
+              <div className="task-panel__example-block">
+                <div className="task-panel__example-label">{getTranslation('task.input', appLanguage)}:</div>
+                <pre className="task-panel__example-value">{ex.input}</pre>
               </div>
-              <div className="task-panel__example-row">
-                <span className="task-panel__example-label">{getTranslation('task.output', appLanguage)}:</span>
-                <code>{ex.output}</code>
+              <div className="task-panel__example-block" style={{ marginTop: '12px' }}>
+                <div className="task-panel__example-label">{getTranslation('task.output', appLanguage)}:</div>
+                <pre className="task-panel__example-value">{ex.output}</pre>
               </div>
               {ex.explanation && (
-                <div className="task-panel__example-row task-panel__example-row--explanation">
-                  <span className="task-panel__example-label">{getTranslation('task.explanation', appLanguage)}:</span>
-                  <span>{ex.explanation}</span>
+                <div className="task-panel__example-explanation">
+                  <div className="task-panel__example-label" style={{ marginBottom: '4px' }}>{getTranslation('task.explanation', appLanguage)}:</div>
+                  <div style={{ color: 'var(--text-secondary)', lineHeight: '1.5' }}>{ex.explanation}</div>
                 </div>
               )}
             </div>

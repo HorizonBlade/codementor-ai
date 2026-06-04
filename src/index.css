@@ -888,6 +888,9 @@ pre code {
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-sm);
   margin-bottom: var(--space-sm);
+  margin-top: var(--space-xs);
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .task-panel__example-explanation {
@@ -896,6 +899,7 @@ pre code {
   font-style: italic;
   padding-left: var(--space-md);
   border-left: 2px solid var(--accent-purple-glow);
+  margin-top: var(--space-md);
 }
 
 .task-panel__constraints {

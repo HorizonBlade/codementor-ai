@@ -95,7 +95,7 @@ function TaskGenerator() {
         appLanguage
       });
 
-      if (response.success && response.data) {
+      if (response.success && response.data && response.data.title && response.data.description) {
         const task = response.data;
         setCurrentTask(task);
         setUserCode(task.starterCode || task.functionSignature || '');
@@ -106,7 +106,7 @@ function TaskGenerator() {
         }
         setShowTaskGenerator(false);
       } else {
-        setError(response.error || 'Failed to generate task. Please verify your API keys and connection.');
+        setError(response.error || (appLanguage === 'ru' ? 'Не удалось сгенерировать корректную задачу. Пожалуйста, попробуйте еще раз.' : 'Failed to generate a valid task. Please try again.'));
       }
     } catch (err) {
       setError(err.message || 'An unexpected error occurred during task generation.');
