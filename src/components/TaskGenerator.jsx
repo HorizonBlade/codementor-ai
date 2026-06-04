@@ -203,7 +203,7 @@ function TaskGenerator() {
                     className={`task-generator__topic-chip ${isSelected ? 'task-generator__topic-chip--selected' : ''}`}
                     onClick={() => toggleTopic(topic)}
                   >
-                    {getTranslation(translationKey, appLanguage)}
+                    {getTranslation(translationKey, 'en')}
                   </div>
                 );
               })}

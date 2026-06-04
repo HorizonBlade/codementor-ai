@@ -64,11 +64,18 @@ function TaskPanel() {
       {currentTask.tags && currentTask.tags.length > 0 && (
         <div className="task-panel__tags">
           <Tag size={14} />
-          {currentTask.tags.map((tag) => (
-            <span key={tag} className="task-panel__tag">
-              {tag}
-            </span>
-          ))}
+          {currentTask.tags.map((tag) => {
+            const translationKey = `topic.${tag.toLowerCase().replace(/-/g, '_')}`;
+            const englishTag = getTranslation(translationKey, 'en');
+            const displayTag = englishTag !== translationKey 
+              ? englishTag 
+              : tag.charAt(0).toUpperCase() + tag.slice(1);
+            return (
+              <span key={tag} className="task-panel__tag">
+                {displayTag}
+              </span>
+            );
+          })}
         </div>
       )}
 

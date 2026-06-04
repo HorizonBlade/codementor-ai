@@ -130,11 +130,12 @@ class OpenRouter {
     const langInstruction = isRussian
       ? [
           'CRITICAL LANGUAGE REQUIREMENT:',
-          '- The entire task (title, description, constraints, tags, hints) MUST be written exclusively in Russian (на русском языке).',
+          '- The title, description, constraints, example explanations, and hints MUST be written exclusively in Russian (на русском языке).',
           '- Inside the "examples" array: the "input", "output", and especially the "explanation" strings MUST be written entirely in Russian.',
-          '- Absolutely NO English sentences, English comments, English thought monologues, or English explanations are allowed anywhere in the JSON fields.',
+          '- Absolutely NO English sentences, English comments, English thought monologues, or English explanations are allowed anywhere in the JSON fields, EXCEPT inside the "tags" array and code blocks/variables.',
           '- All text must be natural, high-quality, grammatically correct Russian.',
-          '- Avoid unexplained or incorrect abbreviations like "ПСГЧ" or "ПГСЧ". Always write abbreviation terms in full on their first occurrence and add their short abbreviation in parentheses next to it, e.g. "генератор псевдослучайных чисел (ГПСЧ)".'
+          '- Avoid unexplained or incorrect abbreviations like "ПСГЧ" or "ПГСЧ". Always write abbreviation terms in full on their first occurrence and add their short abbreviation in parentheses next to it, e.g. "генератор псевдослучайных чисел (ГПСЧ)".',
+          '- The "tags" array values MUST remain in English (e.g., ["arrays", "heap", "linked-list", "sorting"]). Do NOT translate tags/topics to Russian.'
         ].join('\n')
       : [
           'CRITICAL LANGUAGE REQUIREMENT:',
