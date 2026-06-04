@@ -8,7 +8,7 @@ export const useAppStore = create((set, get) => ({
   selectedDifficulty: 'easy',
   selectedTopics: [],
   feedback: [],
-  appLanguage: 'ru',
+  appLanguage: 'en',
   assistantChatHistory: [],
   isAssistantThinking: false,
 
