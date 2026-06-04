@@ -240,3 +240,155 @@ describe('_extractText', () => {
     expect(result).toContain('unexpected');
   });
 });
+
+// ─── API Methods ──────────────────────────────────────────────────────
+
+describe('API methods', () => {
+  it('generateTask formats prompt and returns parsed JSON', async () => {
+    const mockResponse = {
+      choices: [{
+        message: {
+          content: JSON.stringify({
+            title: 'Test Task',
+            description: 'Task Description',
+            difficulty: 'easy',
+            tags: ['arrays']
+          })
+        }
+      }]
+    };
+    
+    router.makeRequest = async (messages, options) => {
+      expect(messages[0].role).toBe('system');
+      expect(messages[1].role).toBe('user');
+      expect(messages[1].content).toContain('easy');
+      expect(messages[1].content).toContain('Arrays');
+      return mockResponse;
+    };
+
+    const task = await router.generateTask({
+      language: 'JavaScript',
+      difficulty: 'easy',
+      topic: 'Arrays',
+      style: 'standard',
+      appLanguage: 'en',
+      recentTasks: []
+    });
+
+    expect(task.title).toBe('Test Task');
+    expect(task.difficulty).toBe('easy');
+  });
+
+  it('checkSolution formats request and returns review JSON', async () => {
+    const mockResponse = {
+      choices: [{
+        message: {
+          content: JSON.stringify({
+            correct: true,
+            score: 100,
+            feedback: 'Great job!'
+          })
+        }
+      }]
+    };
+
+    router.makeRequest = async (messages, options) => {
+      expect(messages[0].role).toBe('system');
+      expect(messages[1].content).toContain('bubbleSort');
+      expect(messages[1].content).toContain('JavaScript');
+      return mockResponse;
+    };
+
+    const result = await router.checkSolution({
+      task: { title: 'Sort' },
+      userCode: 'function bubbleSort() {}',
+      language: 'JavaScript',
+      focus: 'correctness',
+      appLanguage: 'en'
+    });
+
+    expect(result.correct).toBe(true);
+    expect(result.score).toBe(100);
+    expect(result.feedback).toBe('Great job!');
+  });
+
+  it('askAssistant formats Socratic prompt for active task', async () => {
+    const mockResponse = {
+      choices: [{
+        message: {
+          content: 'Let me guide you.'
+        }
+      }]
+    };
+
+    router.makeRequest = async (messages, options) => {
+      expect(messages[0].role).toBe('system');
+      expect(messages[0].content).toContain('CURRENT CODING CHALLENGE CONTEXT');
+      expect(messages[0].content).toContain('solution code');
+      expect(messages[1].content).toBe('How do I start?');
+      return mockResponse;
+    };
+
+    const response = await router.askAssistant({
+      messages: [{ role: 'user', content: 'How do I start?' }],
+      currentTask: { title: 'Socratic Challenge', description: 'Solve me', difficulty: 'easy', language: 'JavaScript' },
+      appLanguage: 'en'
+    });
+
+    expect(response).toBe('Let me guide you.');
+  });
+
+  it('askAssistant formats general tutor prompt when no active task', async () => {
+    const mockResponse = {
+      choices: [{
+        message: {
+          content: 'General explanation here.'
+        }
+      }]
+    };
+
+    router.makeRequest = async (messages, options) => {
+      expect(messages[0].role).toBe('system');
+      expect(messages[0].content).toContain('general programming tutor');
+      expect(messages[0].content).not.toContain('CURRENT CODING CHALLENGE CONTEXT');
+      return mockResponse;
+    };
+
+    const response = await router.askAssistant({
+      messages: [{ role: 'user', content: 'Explain closures' }],
+      currentTask: null,
+      appLanguage: 'en'
+    });
+
+    expect(response).toBe('General explanation here.');
+  });
+
+  it('runCode formats execution request and returns simulated output JSON', async () => {
+    const mockResponse = {
+      choices: [{
+        message: {
+          content: JSON.stringify({
+            output: 'Success output',
+            error: null,
+            results: []
+          })
+        }
+      }]
+    };
+
+    router.makeRequest = async (messages, options) => {
+      expect(messages[0].role).toBe('system');
+      expect(messages[0].content).toContain('code execution engine simulator');
+      return mockResponse;
+    };
+
+    const result = await router.runCode({
+      task: 'Task details',
+      userCode: 'console.log()',
+      language: 'JavaScript'
+    });
+
+    expect(result.output).toBe('Success output');
+    expect(result.error).toBeNull();
+  });
+});
