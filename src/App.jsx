@@ -35,7 +35,8 @@ function App() {
         // Load settings preferences
         const settingsFields = [
           'selectedLanguage', 'selectedDifficulty', 'timerEnabled',
-          'taskStyle', 'focusMode', 'maxHints', 'timerLimit', 'appLanguage'
+          'taskStyle', 'focusMode', 'maxHints', 'timerLimit', 'appLanguage',
+          'saveSolutionsEnabled'
         ];
         
         for (const field of settingsFields) {

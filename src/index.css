@@ -2056,6 +2056,14 @@ pre code {
   background: var(--bg-card);
 }
 
+.history-table__row--clickable {
+  cursor: pointer;
+}
+
+.history-table__row--clickable:hover td {
+  color: var(--text-primary);
+}
+
 .history-table__status {
   display: inline-flex;
   align-items: center;

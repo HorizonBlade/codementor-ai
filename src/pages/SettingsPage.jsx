@@ -28,6 +28,8 @@ function SettingsPage() {
   const appLanguage = useAppStore((s) => s.appLanguage);
   const setAppLanguage = useAppStore((s) => s.setAppLanguage);
   const clearProgressData = useAppStore((s) => s.clearProgressData);
+  const saveSolutionsEnabled = useAppStore((s) => s.saveSolutionsEnabled);
+  const setSaveSolutionsEnabled = useAppStore((s) => s.setSaveSolutionsEnabled);
 
   // Helper to persist settings when changed
   const savePreference = async (key, value) => {
@@ -239,6 +241,29 @@ function SettingsPage() {
                   <option value="ru">Русский</option>
                   <option value="en">English</option>
                 </select>
+              </div>
+            </div>
+
+            {/* Save task solutions toggle */}
+            <div className="task-generator__setting-row" style={{ marginTop: '1rem' }}>
+              <div className="task-generator__setting-label" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '4px' }}>
+                <span style={{ fontWeight: '500' }}>{getTranslation('settings.save_solutions_label', appLanguage)}</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', maxWidth: '280px', lineHeight: '1.3' }}>
+                  {getTranslation('settings.save_solutions_desc', appLanguage)}
+                </span>
+              </div>
+              <div className="task-generator__setting-control">
+                <input
+                  type="checkbox"
+                  checked={saveSolutionsEnabled}
+                  onChange={(e) => setSaveSolutionsEnabled(e.target.checked)}
+                  style={{
+                    width: '18px',
+                    height: '18px',
+                    cursor: 'pointer',
+                    accentColor: 'var(--accent-purple)'
+                  }}
+                />
               </div>
             </div>
           </div>

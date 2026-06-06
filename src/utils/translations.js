@@ -125,6 +125,8 @@ export const translations = {
     'settings.clear_cache_btn': 'Очистить кэш',
     'settings.clear_cache_confirm': 'Вы уверены, что хотите полностью стереть историю и прогресс? Это действие невозможно отменить.',
     'settings.clear_cache_success': 'Кэш и прогресс успешно очищены!',
+    'settings.save_solutions_label': 'Сохранять решения задач',
+    'settings.save_solutions_desc': 'Локально сохраняет условия задач и ваш верный код для возможности повторного просмотра.',
 
     // Progress
     'prog.title': 'Прогресс и Активность',
@@ -288,6 +290,8 @@ export const translations = {
     'settings.clear_cache_btn': 'Clear Cache',
     'settings.clear_cache_confirm': 'Are you sure you want to completely erase your progress and history? This action cannot be undone.',
     'settings.clear_cache_success': 'Cache and progress cleared successfully!',
+    'settings.save_solutions_label': 'Save task solutions',
+    'settings.save_solutions_desc': 'Locally saves task details and your correct code so you can review them later.',
 
     // Progress
     'prog.title': 'Progress & Activity',

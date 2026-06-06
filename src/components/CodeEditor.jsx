@@ -64,6 +64,7 @@ function CodeEditor() {
   const updateStats = useAppStore((s) => s.updateStats);
   const selectedDifficulty = useAppStore((s) => s.selectedDifficulty);
   const addToHistory = useAppStore((s) => s.addToHistory);
+  const saveSolutionsEnabled = useAppStore((s) => s.saveSolutionsEnabled);
   const timerEnabled = useAppStore((s) => s.timerEnabled);
   const timerSeconds = useAppStore((s) => s.timerSeconds);
   const timerRunning = useAppStore((s) => s.timerRunning);
@@ -188,6 +189,10 @@ function CodeEditor() {
           difficulty: selectedDifficulty,
           solved: true,
           attempts: 1,
+          ...(saveSolutionsEnabled ? {
+            taskObject: currentTask,
+            userCode: userCode,
+          } : {}),
         });
         setTimerRunning(false);
       }

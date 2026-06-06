@@ -11,6 +11,40 @@ function ProgressPage() {
   const history = useAppStore((s) => s.history);
   const setCurrentPage = useAppStore((s) => s.setCurrentPage);
   const appLanguage = useAppStore((s) => s.appLanguage);
+  
+  const setCurrentTask = useAppStore((s) => s.setCurrentTask);
+  const setUserCode = useAppStore((s) => s.setUserCode);
+  const setSelectedLanguage = useAppStore((s) => s.setSelectedLanguage);
+  const setSelectedDifficulty = useAppStore((s) => s.setSelectedDifficulty);
+  const addFeedback = useAppStore((s) => s.addFeedback);
+  const clearFeedback = useAppStore((s) => s.clearFeedback);
+
+  const handleRowClick = (item) => {
+    if (!item.taskObject || !item.userCode) return;
+    
+    setCurrentTask(item.taskObject);
+    setUserCode(item.userCode);
+    if (item.language) setSelectedLanguage(item.language);
+    if (item.difficulty) setSelectedDifficulty(item.difficulty);
+    
+    clearFeedback();
+    addFeedback({
+      status: 'correct',
+      message: appLanguage === 'ru'
+        ? `### Задача загружена! 🎉\n\nВы успешно решили задачу **"${item.task}"** ранее. Ваше сохраненное решение загружено в редактор.`
+        : `### Challenge Loaded! 🎉\n\nYou successfully solved the **"${item.task}"** challenge before. Your saved solution has been loaded into the editor.`,
+      suggestion: appLanguage === 'ru'
+        ? 'Вы можете изучить свой код, запустить его локально для тестирования или внести правки.'
+        : 'You can review your code, run it locally for testing, or make edits.',
+      complexity: {
+        time: item.taskObject.optimalComplexity?.time || 'O(...)',
+        space: item.taskObject.optimalComplexity?.space || 'O(...)'
+      }
+    });
+
+    setCurrentPage('practice');
+    navigate('/');
+  };
 
   // Difficulty breakdown data
   const diffs = ['newbie', 'easy', 'medium', 'hard', 'expert'];
@@ -167,9 +201,19 @@ function ProgressPage() {
               {history.map((item) => {
                 const diffConfig = getDifficultyById(item.difficulty);
                 const langConfig = getLanguageById(item.language);
+                const canLoad = !!item.taskObject && !!item.userCode;
 
                 return (
-                  <tr key={item.id}>
+                  <tr 
+                    key={item.id}
+                    onClick={() => canLoad && handleRowClick(item)}
+                    className={canLoad ? 'history-table__row--clickable' : ''}
+                    title={
+                      canLoad 
+                        ? (appLanguage === 'ru' ? 'Кликните, чтобы загрузить решение в редактор' : 'Click to load solution into editor') 
+                        : (appLanguage === 'ru' ? 'Решение для этой задачи не было сохранено' : 'Solution not saved for this challenge')
+                    }
+                  >
                     <td style={{ fontWeight: '600', color: 'var(--text-primary)' }}>
                       {item.task}
                     </td>

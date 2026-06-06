@@ -11,6 +11,7 @@ export const useAppStore = create((set, get) => ({
   appLanguage: 'en',
   assistantChatHistory: [],
   isAssistantThinking: false,
+  saveSolutionsEnabled: true,
 
   // UI state
   currentPage: 'practice',
@@ -191,6 +192,10 @@ export const useAppStore = create((set, get) => ({
   setAppLanguage: (lang) => {
     set({ appLanguage: lang });
     if (window.electronAPI) window.electronAPI.storeSet('appLanguage', lang);
+  },
+  setSaveSolutionsEnabled: (enabled) => {
+    set({ saveSolutionsEnabled: enabled });
+    if (window.electronAPI) window.electronAPI.storeSet('saveSolutionsEnabled', enabled);
   },
 }));
 
