@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { MessageSquare, Send, Trash2, X, Bot } from 'lucide-react';
+import { MessageSquare, Send, Trash2, X, Bot, Maximize2, Minimize2 } from 'lucide-react';
 import { useAppStore } from '../store/appStore';
 
 function AssistantChat() {
@@ -15,6 +15,7 @@ function AssistantChat() {
   const setThinking = useAppStore((s) => s.setIsAssistantThinking);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [inputText, setInputText] = useState('');
   
   const messagesEndRef = useRef(null);
@@ -27,12 +28,20 @@ function AssistantChat() {
       placeholder: 'Задайте вопрос...',
       clearConfirm: 'Очистить историю чата?',
       welcome: 'Привет! Я твой AI-помощник CodeMentor. 🚀\n\nТы можешь задать мне любой вопрос по текущей задаче (я помогу разобраться с условием и логикой, но не выдам готовое решение!) или спросить о программировании в целом.',
+      maximize: 'Развернуть чат',
+      minimize: 'Свернуть чат',
+      clearChat: 'Очистить историю',
+      closeChat: 'Закрыть',
     },
     en: {
       title: 'AI Mentor',
       placeholder: 'Ask a question...',
       clearConfirm: 'Clear chat history?',
       welcome: 'Hello! I am your CodeMentor AI Assistant. 🚀\n\nFeel free to ask me anything about the current task (I can clarify instructions or logic, but won\'t spoil the solution!) or ask general programming questions.',
+      maximize: 'Expand chat',
+      minimize: 'Collapse chat',
+      clearChat: 'Clear history',
+      closeChat: 'Close',
     }
   };
 
@@ -130,7 +139,7 @@ function AssistantChat() {
       </button>
 
       {/* Chat Window Popup */}
-      <div className={`assistant-chat-window ${!isOpen ? 'assistant-chat-window--hidden' : ''}`}>
+      <div className={`assistant-chat-window ${!isOpen ? 'assistant-chat-window--hidden' : ''} ${isExpanded ? 'assistant-chat-window--expanded' : ''}`}>
         {/* Chat Header */}
         <div className="assistant-chat-header">
           <div className="assistant-chat-title">
@@ -145,14 +154,22 @@ function AssistantChat() {
               <button 
                 className="assistant-chat-action-btn" 
                 onClick={handleClear}
-                title="Clear Chat"
+                title={activeStrings.clearChat}
               >
                 <Trash2 size={16} />
               </button>
             )}
             <button 
               className="assistant-chat-action-btn" 
+              onClick={() => setIsExpanded(!isExpanded)}
+              title={isExpanded ? activeStrings.minimize : activeStrings.maximize}
+            >
+              {isExpanded ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+            </button>
+            <button 
+              className="assistant-chat-action-btn" 
               onClick={() => setIsOpen(false)}
+              title={activeStrings.closeChat}
             >
               <X size={16} />
             </button>
